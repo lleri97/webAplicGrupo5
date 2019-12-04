@@ -7,7 +7,7 @@ package entitiesJPA;
 
 /**
  *
- * @author 2dam
+ * @author Fran
  */
 public class User {
     
