@@ -11,7 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
 
 /**
  *
@@ -24,68 +28,70 @@ public class Area implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
     private String name;
+    @ManyToMany
+    @JoinColumn(name="areas")
     private Collection<Department> departments;
+    @ManyToMany
+    
+    @JoinTable(name="areas_documents")
     private Collection<Document> documents;
 
-    public Long getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
-    
-     /**
+     @Override
+    public String toString() {
+        return "entitiesJPA.Area[ id=" + id + " ]";
+    }
+    /**
      * @return the name
      */
     public String getName() {
         return name;
     }
-
     /**
      * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;
     }
-
     /**
      * @return the departments
      */
     public Collection<Department> getDepartments() {
         return departments;
     }
-
     /**
      * @param departments the departments to set
      */
     public void setDepartments(Collection<Department> departments) {
         this.departments = departments;
     }
-
     /**
      * @return the documents
      */
     public Collection<Document> getDocuments() {
         return documents;
     }
-
     /**
      * @param documents the documents to set
      */
     public void setDocuments(Collection<Document> documents) {
         this.documents = documents;
     }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (int) id;
         return hash;
     }
-
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -93,14 +99,9 @@ public class Area implements Serializable {
             return false;
         }
         Area other = (Area) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (this.id != other.id) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entitiesJPA.Area[ id=" + id + " ]";
     }   
 }
